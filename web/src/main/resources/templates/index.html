@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--
+sec:authorize="isAuthenticated()" : 로그인된 사용자에게만 보여짐
+sec:authorize="!isAuthenticated()" : 로그인안된 사용자에게만 보여짐
+-->
+<body>
+<form th:action="|/logout|" method="POST">
+<button type="submit" sec:authorize="isAuthenticated()">로그아웃</button>
+<button type="submit" sec:authorize="!isAuthenticated()">로그인</button>
+</form>
+</body>
+</html>

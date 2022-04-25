@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : package + classname -->
+<mapper namespace="security.common.repository.LoginRepository">
+
+    <select id="findAllMbrInfo" resultType="security.common.model.MbrInfo">
+        SELECT MMM.LOGIN_ID AS loginId,
+               MMM.NAME,
+               MMM.PASSWORD,
+               MMM.REG_DTIME AS regDtime
+        FROM MB_MBR_MGMT MMM
+    </select>
+
+    <insert id="createMbrInfo" parameterType="security.common.model.MbrInfo">
+        insert into MB_MBR_MGMT values(#{loginId:VARCHAR}, #{name:VARCHAR}, #{password:VARCHAR}, sysdate())
+    </insert>
+
+    <select id="getMbrInfo" parameterType="security.common.model.MbrInfo" resultType="security.common.model.MbrInfo">
+        SELECT MMM.LOGIN_ID AS loginId,
+               MMM.NAME,
+               MMM.PASSWORD,
+               MMM.REG_DTIME AS regDtime
+        FROM MB_MBR_MGMT MMM
+        WHERE login_id = #{loginId:VARCHAR}
+    </select>
+
+    <select id="getMbrInfoOAuth" parameterType="security.common.model.MbrInfo" resultType="security.common.model.MbrInfo">
+        SELECT MMM.LOGIN_ID AS loginId,
+               MMM.NAME,
+               MMM.PASSWORD,
+               MMM.REG_DTIME AS regDtime
+        FROM MB_MBR_MGMT MMM,
+             MB_MBR_MGMT_OAUTH MMMO
+        WHERE MMM.LOGIN_ID = MMMO.LOGIN_ID
+          AND MMMO.TOKEN_VALUE = #{tokenValue:VARCHAR}
+    </select>
+</mapper>
+
+
